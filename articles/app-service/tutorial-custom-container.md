@@ -467,6 +467,12 @@ To deploy a container to Azure App Service, you first create a web app on App Se
     > clientId=$(az identity show --resource-group <group-name> --name <identity-name> --query clientId --output tsv)
     > az resource update --ids /subscriptions/<subscription-id>/resourceGroups/myResourceGroup/providers/Microsoft.Web/sites/<app-name>/config/web --set properties.AcrUserManagedIdentityID=$clientId
     > ```
+    >
+    > If your app uses [VNET to access ACR](https://docs.microsoft.com/en-us/azure/app-service/web-sites-integrate-with-vnet), set an additional `WEBSITE_PULL_IMAGE_OVER_VNET` app setting to pull over VNET:
+    >
+    > ```azurecli-interactive
+    > az webapp config appsettings set --name <app-name> --resource-group <resource-group-name> --settings '{"WEBSITE_PULL_IMAGE_OVER_VNET":true}'
+    > ```
 
 ## Deploy the image and test the app
 
